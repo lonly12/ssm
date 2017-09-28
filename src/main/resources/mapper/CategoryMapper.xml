@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.zucc.mapper.CategoryMapper">
+    <cache/>
+    <select id="findByName" resultType="TbCategoryEntity">
+        SELECT
+        *
+        FROM tb_category
+        WHERE category_name = #{categoryName};
+    </select>
+
+    <select id="findById" resultType="TbCategoryEntity">
+        SELECT
+        *
+        FROM tb_category
+        WHERE category_id = #{categoryId};
+    </select>
+
+
+    <select id="findAll" resultType="TbCategoryEntity">
+        SELECT * FROM tb_category ;
+    </select>
+
+    <select id="getCount" resultType="long">
+        SELECT count(*) FROM tb_category ;
+    </select>
+
+    <insert id="save" parameterType="TbCategoryEntity"  useGeneratedKeys="true" keyProperty="categoryId">
+        <!-- 具体的sql -->
+        INSERT INTO tb_category(category_name,category_cdate,category_remark)
+        VALUES(
+        #{categoryName},
+        #{categoryCdate},
+        #{categoryRemark}
+        );
+    </insert>
+
+    <delete id="delete" parameterType="int">
+        delete from tb_category where category_id=#{categoryId}
+    </delete>
+
+    <update id="update" parameterType="TbCategoryEntity" >
+        update  tb_category
+        set
+        category_name=#{categoryName},
+        category_remark=#{categoryRemark}
+
+        where category_id=#{categoryId}
+    </update>
+
+
+    <select id="getPageData" resultType="TbCategoryEntity">
+        SELECT * FROM tb_category LIMIT #{startindex},#{pagesize};
+    </select>
+
+</mapper>

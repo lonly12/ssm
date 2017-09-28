@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.zucc.mapper.UserMapper">
+
+
+
+    <!-- 目的：为dao接口方法提供sql语句配置 -->
+    <select id="queryById" resultType="TbUserEntity" parameterType="long">
+        <!-- 具体的sql -->
+        SELECT
+        user_id,
+        user_acount,
+        user_pwd,
+        user_name
+        FROM
+        tb_user
+        WHERE
+        user_id = #{user_id};
+    </select>
+
+    <select id="queryByAcount" resultType="TbUserEntity" parameterType="string">
+        <!-- 具体的sql -->
+        SELECT *
+        FROM
+        tb_user
+        WHERE
+        user_acount = #{user_acount};
+    </select>
+
+    <select id="selectUser" resultType="TbUserEntity" >
+        <!-- 具体的sql -->
+        SELECT *
+        FROM
+        tb_user
+        WHERE
+        user_acount = #{user_acount} and user_pwd = #{user_pwd};
+    </select>
+
+
+    <insert id="save" parameterType="TbUserEntity"  useGeneratedKeys="true" keyProperty="userId">
+        <!-- 具体的sql -->
+        INSERT INTO tb_user(user_acount,user_pwd,user_name,user_sex,user_phone,user_email,user_cdate,user_state)
+        VALUES(
+        #{userAcount},
+        #{userPwd},
+        #{userName},
+        #{userSex},
+        #{userPhone},
+        #{userEmail},
+        #{userCdate},
+        #{userState}
+        );
+    </insert>
+
+    <insert id="saveUserAndRole">
+        INSERT INTO role_user(user_id,role_id)
+        VALUES
+        (
+        #{user_id},
+        #{role_id}
+        );
+    </insert>
+
+
+    <select id="countByAcount" resultType="int" parameterType="string">
+        <!-- 具体的sql -->
+        SELECT
+        COUNT(*)
+        FROM
+        tb_user
+        WHERE
+        user_acount = #{user_acount} ;
+    </select>
+
+    <select id="countByEmail" resultType="int" parameterType="string">
+        <!-- 具体的sql -->
+        SELECT
+        COUNT(*)
+        FROM
+        tb_user
+        WHERE
+        user_email = #{user_email} ;
+    </select>
+
+</mapper>
